@@ -1,0 +1,97 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Add Collaborator{% endblock %}
+
+{% block content %}
+<style>
+    .add-collab-container {
+        max-width: 600px;
+        margin: 60px auto;
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .add-collab-container h2 {
+        font-size: 26px;
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .add-collab-container form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .add-collab-container label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #333;
+    }
+
+    .add-collab-container input[type="text"] {
+        padding: 10px;
+        font-size: 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #f9f9f9;
+        margin-bottom: 20px;
+    }
+
+    .add-collab-container button[type="submit"] {
+        padding: 10px 16px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .add-collab-container button[type="submit"]:hover {
+        background-color: #218838;
+    }
+
+    .error-message {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 8px 14px;
+        background-color: #6c757d;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        background-color: #5a6268;
+    }
+</style>
+
+<div class="add-collab-container">
+    <h2>Add Collaborator to <span style="color:#007bff;">{{ project.name }}</span></h2>
+
+    {% if error %}
+        <p class="error-message">{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <label>Enter Username of Collaborator:</label>
+        <input type="text" name="username" required>
+        <button type="submit">Add Collaborator</button>
+    </form>
+
+    <a href="{% url 'project_detail' project.id %}" class="back-link">← Back to Project</a>
+</div>
+{% endblock %}

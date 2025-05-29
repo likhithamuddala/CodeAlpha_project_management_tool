@@ -1,0 +1,84 @@
+{% extends "core/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<style>
+    .login-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .login-container h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+    }
+
+    .login-container form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .login-container label {
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #444;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+    .login-container button {
+        padding: 10px;
+        background-color: #0069d9;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .login-container button:hover {
+        background-color: #0051a8;
+    }
+
+    .login-container .register-link {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .login-container .register-link a {
+        color: #0069d9;
+        text-decoration: none;
+    }
+
+    .login-container .register-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="login-container">
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <div class="register-link">
+        <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+    </div>
+</div>
+{% endblock %}

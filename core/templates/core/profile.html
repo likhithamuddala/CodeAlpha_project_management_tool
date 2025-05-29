@@ -1,0 +1,162 @@
+
+
+{% block content %}
+<style>
+    .nav-buttons {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        gap: 10px;
+        z-index: 1000;
+    }
+
+    .home-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease;
+    }
+
+    .home-button:hover {
+        background-color: #0056b3;
+    }
+
+    .profile-container {
+        max-width: 800px;
+        margin: 60px auto;
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .profile-container h2 {
+        font-size: 26px;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .profile-info {
+        margin-bottom: 30px;
+        line-height: 1.6;
+        color: #333;
+    }
+
+    .profile-info strong {
+        color: #555;
+    }
+
+    .edit-btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .edit-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .section-title {
+        font-size: 22px;
+        color: #2c3e50;
+        margin-top: 40px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+    }
+
+    ul.project-task-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    ul.project-task-list li {
+        padding: 12px;
+        background: #f9f9f9;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    ul.project-task-list li:hover {
+        background-color: #f1f5ff;
+    }
+
+    ul.project-task-list a {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+    }
+
+    ul.project-task-list a:hover {
+        text-decoration: underline;
+    }
+
+    .empty-msg {
+        color: #777;
+        font-style: italic;
+        margin-top: 10px;
+    }
+</style>
+
+<!-- Top-left Navigation Buttons -->
+<div class="nav-buttons">
+    <a href="/" class="home-button">🏠 Home</a>
+    <a href="{% url 'inbox' %}" class="home-button">📨 Inbox</a>
+</div>
+
+<div class="profile-container">
+    <h2>{{ profile_user.username }}'s Profile</h2>
+
+    <div class="profile-info">
+        <p><strong>Bio:</strong> {{ profile_user.bio }}</p>
+        <p><strong>Location:</strong> {{ profile_user.location }}</p>
+        <p><strong>Birthdate:</strong> {{ profile_user.birthdate|date:"M. j, Y" }}</p>
+        <p><strong>Email:</strong> {{ profile_user.email }}</p>
+
+        {% if request.user == profile_user %}
+            <a href="{% url 'edit_profile' %}" class="edit-btn">Edit Profile</a>
+        {% endif %}
+    </div>
+
+    <h3 class="section-title">Projects</h3>
+    <ul class="project-task-list">
+        {% for project in user_projects %}
+            <li>
+                <a href="{% url 'project_detail' project.id %}">
+                    {{ project.title }}
+                </a> — Created by {{ project.creator.username }}
+            </li>
+        {% empty %}
+            <li class="empty-msg">No projects found.</li>
+        {% endfor %}
+    </ul>
+
+    <h3 class="section-title">Tasks</h3>
+    <ul class="project-task-list">
+        {% for task in tasks %}
+            <li>
+                <a href="{% url 'task_detail' task.project.id task.id %}">{{ task.title }}</a>
+                — Status: {{ task.get_status_display }}
+            </li>
+        {% empty %}
+            <li class="empty-msg">No tasks assigned.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

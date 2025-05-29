@@ -1,0 +1,90 @@
+
+{% block content %}
+<style>
+    .create-task-container {
+        max-width: 650px;
+        margin: 60px auto;
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .create-task-container h2 {
+        font-size: 26px;
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .create-task-container form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .create-task-container form p {
+        margin-bottom: 20px;
+    }
+
+    .create-task-container label {
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: block;
+        color: #333;
+    }
+
+    .create-task-container input,
+    .create-task-container select,
+    .create-task-container textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #f9f9f9;
+    }
+
+    .create-task-container button[type="submit"] {
+        margin-top: 20px;
+        background-color: #007bff;
+        color: white;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .create-task-container button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 8px 14px;
+        background-color: #6c757d;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        background-color: #5a6268;
+    }
+</style>
+
+<div class="create-task-container">
+    <h2>Create Task for <span style="color:#007bff;">{{ project.title }}</span></h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Task</button>
+    </form>
+
+    <a href="{% url 'project_detail' project.id %}" class="back-link">← Back to Project</a>
+</div>
+{% endblock %}

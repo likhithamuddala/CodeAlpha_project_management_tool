@@ -1,0 +1,114 @@
+
+{% block content %}
+<style>
+    .task-detail-container {
+        max-width: 700px;
+        margin: 60px auto;
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .task-detail-container h1 {
+        font-size: 28px;
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    .task-detail-container p {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .task-detail-container strong {
+        color: #333;
+    }
+
+    .task-detail-container h3,
+    .task-detail-container h4 {
+        margin-top: 30px;
+        color: #007bff;
+    }
+
+    .task-detail-container ul {
+        padding-left: 20px;
+    }
+
+    .task-detail-container li {
+        margin-bottom: 8px;
+    }
+
+    .task-detail-container form {
+        margin-top: 20px;
+    }
+
+    .task-detail-container form textarea,
+    .task-detail-container form input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        font-size: 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #f9f9f9;
+    }
+
+    .task-detail-container button[type="submit"] {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .task-detail-container button[type="submit"]:hover {
+        background-color: #218838;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 8px 14px;
+        background-color: #6c757d;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        background-color: #5a6268;
+    }
+</style>
+
+<div class="task-detail-container">
+    <h1>{{ task.title }}</h1>
+
+    <p><strong>Description:</strong> {{ task.description }}</p>
+    <p><strong>Due Date:</strong> {{ task.due_date }}</p>
+    <p><strong>Status:</strong> {{ task.status }}</p>
+    <p><strong>Assigned To:</strong> {{ task.assigned_to.username }}</p>
+
+    <h3>Comments</h3>
+    <ul>
+        {% for comment in task.comments.all %}
+            <li><strong>{{ comment.author }}:</strong> {{ comment.content }}</li>
+        {% empty %}
+            <li>No comments yet.</li>
+        {% endfor %}
+    </ul>
+
+    <h4>Add a Comment</h4>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Post Comment</button>
+    </form>
+
+    <a href="{% url 'project_detail' pk=task.project.id %}" class="back-link">← Back to Project</a>
+</div>
+{% endblock %}

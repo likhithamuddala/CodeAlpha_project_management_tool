@@ -1,0 +1,16 @@
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ profile_user.username }}'s Profile</h2>
+    {% if request.user == profile_user %}
+        <a href="{% url 'edit_profile' %}">Edit Profile</a>
+    {% endif %}
+    <p><strong>Bio:</strong> {{ profile_user.bio }}</p>
+    <p><strong>Location:</strong> {{ profile_user.location }}</p>
+    <p><strong>Birthdate:</strong> {{ profile_user.birthdate }}</p>
+</div>
+{% endblock %}
+
+{% if request.user == profile_user %}
+    <a href="{% url 'edit_profile' %}" class="btn btn-warning mt-3">Edit Profile</a>
+{% endif %}

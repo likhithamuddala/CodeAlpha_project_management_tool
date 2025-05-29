@@ -1,0 +1,199 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<style>
+
+          .home-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease;
+        z-index: 1000;
+    }
+
+    .home-button:hover {
+        background-color: #0056b3;
+    }
+    .create-project-container {
+        max-width: 800px;
+        margin: 60px auto;
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .create-project-container h2 {
+        font-size: 28px;
+        color: #2c3e50;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .create-project-container h4 {
+        margin-top: 30px;
+        font-size: 20px;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: block;
+        color: #444;
+    }
+
+    input[type="text"], textarea, select {
+        width: 100%;
+        padding: 10px;
+        font-size: 15px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #f9f9f9;
+        margin-top: 6px;
+    }
+
+    .collaborator-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .collaborator-row select,
+    .collaborator-row input {
+        flex: 1;
+    }
+
+    .remove-collaborator {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .remove-collaborator:hover {
+        background-color: #c82333;
+    }
+
+    #add-collaborator {
+        margin-top: 15px;
+        background-color: #17a2b8;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #add-collaborator:hover {
+        background-color: #138496;
+    }
+
+    .btn-success {
+        margin-top: 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-secondary {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 8px 16px;
+        background-color: #6c757d;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+</style>
+<a href="/" class="home-button">🏠 Home</a>
+<div class="create-project-container">
+    <h2>Create a New Project</h2>
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            {{ project_form.title.label_tag }}
+            {{ project_form.title }}
+        </div>
+
+        <div class="form-group">
+            {{ project_form.description.label_tag }}
+            {{ project_form.description }}
+        </div>
+
+        <h4>Collaborators and their Jobs</h4>
+        <div id="collaborators">
+            <div class="collaborator-row">
+                <select name="collaborator[]">
+                    {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.username }}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" name="job[]" placeholder="Assign job (e.g., Developer)">
+                <button type="button" class="remove-collaborator">×</button>
+            </div>
+        </div>
+
+        <button type="button" id="add-collaborator">Add Another</button>
+        <br>
+        <button type="submit" class="btn-success">Create Project</button>
+    </form>
+
+    <a href="{% url 'project_list' %}" class="btn-secondary">Back to Projects</a>
+</div>
+
+<script>
+document.getElementById("add-collaborator").addEventListener("click", function () {
+    const container = document.getElementById("collaborators");
+    const firstRow = container.querySelector('.collaborator-row');
+    const newRow = firstRow.cloneNode(true);
+
+    newRow.querySelector('select').selectedIndex = 0;
+    newRow.querySelector('input').value = '';
+
+    container.appendChild(newRow);
+});
+
+document.addEventListener('click', function(e) {
+    if (e.target && e.target.classList.contains('remove-collaborator')) {
+        const allRows = document.querySelectorAll('.collaborator-row');
+        if (allRows.length > 1) {
+            e.target.parentElement.remove();
+        }
+    }
+});
+</script>
+{% endblock %}

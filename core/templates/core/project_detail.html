@@ -1,0 +1,111 @@
+
+{% block content %}
+<style>
+    .project-detail-container {
+        max-width: 800px;
+        margin: 60px auto;
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .project-detail-container h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        color: #2c3e50;
+        text-align: center;
+    }
+
+    .project-detail-container p {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .section-title {
+        font-size: 22px;
+        color: #2c3e50;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 6px;
+    }
+
+    .btn-link {
+        display: inline-block;
+        margin: 10px 5px 20px 0;
+        padding: 8px 16px;
+        border-radius: 6px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-link:hover {
+        background-color: #0056b3;
+    }
+
+    ul.task-list {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    ul.task-list li {
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+        font-size: 15px;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 8px 14px;
+        background-color: #6c757d;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        background-color: #5a6268;
+    }
+</style>
+
+<div class="project-detail-container">
+    <h1>{{ project.title }}</h1>
+
+    <p><strong>Description:</strong> {{ project.description }}</p>
+
+    <p><strong>Collaborators:</strong>
+        {% for member in project.members.all %}
+            {{ member.username }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+            None
+        {% endfor %}
+    </p>
+
+    <a href="{% url 'add_collaborator' pk=project.id %}" class="btn-link">➕ Add Collaborator</a>
+    <a href="{% url 'add_task' project_id=project.id %}" class="btn-link">📝 Add Task</a>
+
+    <h3 class="section-title">Tasks</h3>
+    <ul class="task-list">
+        {% for task in tasks %}
+            <li>
+                <a href="{% url 'task_detail' project_id=project.id task_id=task.id %}">
+                    {{ task.title }}
+                </a> - <strong>{{ task.status }}</strong>
+            </li>
+        {% empty %}
+            <li>No tasks yet.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'project_list' %}" class="back-link">← Back to Project List</a>
+</div>
+{% endblock %}
