@@ -15,13 +15,18 @@ A Django-based web application that allows users to manage collaborative project
 - ✅ Permission checks to ensure secure user interactions
 
 ---
+## 🛠️ Tech Stack
+
+- Backend: Django
+- Frontend: HTML, CSS, JavaScript
+- Database: SQLite (default, can switch to PostgreSQL)
+- Version Control: Git & GitHub
 
 
-
-⚙️ Setup Instructions
+##⚙️ Setup Instructions
 
 # Clone the repo
-git clone https://github.com/likhithamuddala/simple-ecommerce-store.git
+git clone https://github.com/likhithamuddala/project_management_tool.git
 
 # Navigate into the project
 cd simple-ecommerce-store/ecommerce
