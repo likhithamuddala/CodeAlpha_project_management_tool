@@ -16,57 +16,25 @@ A Django-based web application that allows users to manage collaborative project
 
 ---
 
-📁 Project Structure
 
-project_management_tool/
-├── core/
-│ ├── migrations/
-│ ├── templates/
-│ │ └── core/
-│ │ ├── base.html
-│ │ ├── profile.html
-│ │ ├── inbox.html
-│ │ ├── thread.html
-│ │ └── ...
-│ ├── static/
-│ ├── models.py
-│ ├── views.py
-│ ├── urls.py
-│ └── ...
-├── project_management_tool/
-│ ├── settings.py
-│ ├── urls.py
-│ └── ...
-├── manage.py
-└── README.md
 
-## ⚙️ Setup Instructions
+⚙️ Setup Instructions
 
-1. Clone the Repository
+# Clone the repo
+git clone https://github.com/likhithamuddala/simple-ecommerce-store.git
 
-git clone https://github.com/yourusername/project-management-tool.git
-cd project-management-tool
+# Navigate into the project
+cd simple-ecommerce-store/ecommerce
 
-2. Create a Virtual Environment
+# (Optional) Create virtual environment
+python -m venv env
+source env/bin/activate  # On Windows: env\Scripts\activate
 
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-3. Install Dependencies
-
+# Install dependencies
 pip install -r requirements.txt
 
-4. Apply Migrations
-
-python manage.py makemigrations
+# Run migrations
 python manage.py migrate
 
-5. Create a Superuser (Admin)
-
-python manage.py createsuperuser
-
-6. Run the Server
-
+# Run the server
 python manage.py runserver
-
-Visit http://127.0.0.1:8000/ in your browser.
