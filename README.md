@@ -25,6 +25,8 @@ A Django-based web application that allows users to manage collaborative project
 
 ##⚙️ Setup Instructions
 
+```bash
+
 # Clone the repo
 git clone https://github.com/likhithamuddala/project_management_tool.git
 
