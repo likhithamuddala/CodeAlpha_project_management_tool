@@ -28,7 +28,7 @@ A Django-based web application that allows users to manage collaborative project
 ```bash
 
 # Clone the repo
-git clone https://github.com/likhithamuddala/project_management_tool.git
+git clone https://github.com/likhithamuddala/CodeAlpha_project_management_tool.git
 
 # Navigate into the project
 cd simple-ecommerce-store/ecommerce
