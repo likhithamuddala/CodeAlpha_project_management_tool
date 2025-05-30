@@ -15,7 +15,7 @@ A Django-based web application that allows users to manage collaborative project
 - ✅ Permission checks to ensure secure user interactions
 
 ---
-## 🛠️ Tech Stack
+🛠️ Tech Stack
 
 - Backend: Django
 - Frontend: HTML, CSS, JavaScript
@@ -23,7 +23,7 @@ A Django-based web application that allows users to manage collaborative project
 - Version Control: Git & GitHub
 
 
-##⚙️ Setup Instructions
+⚙️ Setup Instructions
 
 ```bash
 
